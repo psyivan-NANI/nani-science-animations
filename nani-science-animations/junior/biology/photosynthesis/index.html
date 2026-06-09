@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>南一版互動自然教室：光合作用微觀工廠</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="control-panel">
+            <div class="panel-group">
+                <span class="factory-title">🏭 葉綠體微觀流水線</span>
+                <button id="btn-reset" class="btn">重置工廠</button>
+            </div>
+            <div class="panel-group">
+                <div class="status-badge" id="factory-status">等待投入原料...</div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="canvas-viewport">
+                <div class="diagram-wrapper" id="factory-wrapper">
+
+                    <canvas id="photoCanvas"></canvas>
+
+                    <div class="sci-label label-thylakoid">葉綠體基粒 (光反應區)</div>
+                    <div class="sci-label label-stroma">葉綠體基質 (暗反應區)</div>
+
+                    <div class="reaction-zone zone-light" id="zone-light">光反應投入點</div>
+                    <div class="reaction-zone zone-dark" id="zone-dark">暗反應投入點</div>
+
+                    <div class="product-spawn hidden" id="spawn-o2">氧氣 (O₂) 點擊收集!</div>
+                    <div class="product-spawn hidden" id="spawn-glucose">葡萄糖 點擊收集!</div>
+                </div>
+
+                <div class="ingredients-panel">
+                    <p class="panel-hint">💡 請用滑鼠將原料拖拽至上方的對應反應投入點中：</p>
+                    <div class="ingredients-pool">
+                        <div class="draggable-item item-photon" draggable="true" id="photon">☀️ 光子</div>
+                        <div class="draggable-item item-h2o" draggable="true" id="h2o">💧 水分子 (H₂O)</div>
+                        <div class="draggable-item item-co2" draggable="true" id="co2">💨 二氧化碳 (CO₂)</div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <section class="info-card">
+                    <h2><span class="dot yellow"></span> 工廠運作日誌</h2>
+                    <p class="current-status" id="log-title">雙階段生產線</p>
+                    <blockquote id="log-desc">
+                        光合作用在<strong>葉綠體</strong>中進行。分為兩大階段：在基粒進行的<strong>光反應</strong>，以及在基質進行的<strong>暗反應（碳反應）</strong>。
+                    </blockquote>
+                </section>
+
+                <section class="info-card">
+                    <h2><span class="dot green"></span> 核心精華考點</h2>
+                    <ul>
+                        <li><strong>光反應（需光）：</strong>葉綠素吸收<strong>光能</strong>，將<strong>水</strong>分解產生<strong>氧氣</strong>（釋放到大氣中）與能量。
+                        </li>
+                        <li><strong>暗反應（不需光）：</strong>利用光反應傳來的能量，使<strong>二氧化碳</strong>轉換成<strong>葡萄糖</strong>與水。</li>
+                        <li><strong>實驗重點：</strong>葉片加熱使用<strong>酒精</strong>是為了「溶出葉綠素」；滴加<strong>碘液</strong>可用於檢驗產物「澱粉」（變藍黑色）。
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="info-card quiz-card">
+                    <h2><span class="dot blue"></span> 課堂課後隨堂檢測</h2>
+                    <div id="quiz-container">
+                        <div class="quiz-question" id="quiz-q">載入中...</div>
+                        <div class="quiz-options" id="quiz-opts">
+                        </div>
+                        <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+                        <button id="btn-next-quiz" class="btn hidden" style="margin-top:12px; width:100%;"
+                            onclick="nextQuestion()">下一題</button>
+                    </div>
+                </section>
+            </aside>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

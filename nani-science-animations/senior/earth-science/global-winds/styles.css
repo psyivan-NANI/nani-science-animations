@@ -1,0 +1,288 @@
+:root {
+    --bg-dark: #070c14;
+    --card-bg: rgba(13, 22, 38, 0.85);
+    --ocean-blue: #1e3a8a;
+    --atmosphere-glow: #38bdf8;
+    --wind-orange: #f97316;
+    --text-glow: #00ffcc;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #e2e8f0;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* 頂部狀態控制欄 */
+.control-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0f172a;
+    padding: 12px 20px;
+    border-bottom: 1px solid #1e293b;
+    z-index: 100;
+}
+
+.app-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--text-glow);
+    text-shadow: 0 0 8px rgba(0, 255, 204, 0.3);
+}
+
+.toggle-group {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-toggle {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #94a3b8;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.btn-toggle:hover {
+    background: #334155;
+    color: #fff;
+}
+
+.btn-toggle.active {
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    border-color: var(--atmosphere-glow);
+    color: #fff;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+.btn {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+/* 主體 RWD 佈局 */
+.main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.canvas-viewport {
+    flex: 1.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, #0b1a30 0%, #070c14 100%);
+    padding: 15px;
+    position: relative;
+}
+
+/* 核心 1:1 黃金包裹約束容器（保證多端結構絕對不脫節移位） */
+.diagram-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 620px;
+    aspect-ratio: 1 / 1;
+}
+
+#windsCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* 構造標籤百分比絕對定位 */
+.sci-label {
+    position: absolute;
+    background: rgba(7, 12, 20, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #cbd5e1;
+    pointer-events: none;
+    z-index: 10;
+    transform: translate(-50%, -50%);
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 標籤分類視覺樣式 */
+.pressure-lbl {
+    border-color: rgba(0, 255, 204, 0.4);
+    color: #00ffcc;
+    font-weight: bold;
+}
+
+.wind-lbl {
+    border-color: var(--wind-orange);
+    color: #fdba74;
+}
+
+.cell-lbl {
+    border-color: #eab308;
+    color: #fef08a;
+    font-style: italic;
+}
+
+/* 右側側邊欄與題庫 */
+.sidebar {
+    flex: 1.1;
+    background: #0f172a;
+    border-left: 1px solid #1e293b;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+}
+
+.info-card {
+    background: rgba(30, 41, 59, 0.3);
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.info-card h2 {
+    font-size: 14px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot.yellow {
+    background: #eab308;
+    box-shadow: 0 0 8px #eab308;
+}
+
+.dot.green {
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+}
+
+.dot.blue {
+    background: #0284c7;
+    box-shadow: 0 0 8px #0284c7;
+}
+
+.current-status {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--text-glow);
+    margin-bottom: 4px;
+}
+
+blockquote {
+    font-size: 12px;
+    color: #cbd5e1;
+    border-left: 3px solid #38bdf8;
+    padding-left: 8px;
+    line-height: 1.5;
+}
+
+.info-card ul {
+    padding-left: 15px;
+    font-size: 12px;
+    color: #cbd5e1;
+    line-height: 1.5;
+}
+
+.info-card li {
+    margin-bottom: 5px;
+}
+
+/* 題庫結構樣式 */
+.quiz-card {
+    border-color: rgba(56, 189, 248, 0.4);
+    background: rgba(10, 25, 47, 0.75);
+}
+
+.quiz-question {
+    font-size: 13px;
+    color: #fff;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.opt-btn {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #cbd5e1;
+    padding: 9px 12px;
+    border-radius: 6px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 12px;
+    transition: 0.2s;
+    line-height: 1.4;
+    word-break: break-all;
+}
+
+.opt-btn:hover {
+    background: #334155;
+    border-color: var(--text-glow);
+    color: #fff;
+}
+
+.quiz-feedback {
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.quiz-feedback.correct {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid #10b981;
+    color: #34d399;
+}
+
+.quiz-feedback.wrong {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid #ef4444;
+    color: #f87171;
+}
+
+.hidden {
+    display: none !important;
+}

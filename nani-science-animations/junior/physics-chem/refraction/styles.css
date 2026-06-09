@@ -1,0 +1,309 @@
+:root {
+    --bg-dark: #0b141a;
+    --card-bg: rgba(20, 32, 43, 0.8);
+    --border-glow: rgba(0, 255, 204, 0.4);
+    --laser-red: #ff3333;
+    --laser-glow: rgba(255, 51, 51, 0.6);
+    --normal-color: #cbd5e1;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #e4e6eb;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* 頂部控制欄 */
+.control-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #14202b;
+    padding: 12px 20px;
+    border-bottom: 1px solid #243447;
+    z-index: 100;
+}
+
+.panel-group {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.btn,
+.btn-view {
+    background: #1e2d3b;
+    border: 1px solid #38444d;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 14px;
+}
+
+.btn:hover,
+.btn-view:hover {
+    background: #2c3e50;
+    border-color: #00ffcc;
+}
+
+.btn.active,
+.btn-view.active {
+    background: #00a8cc;
+    border-color: #00ffcc;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* 主畫面佈局 */
+.main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.canvas-viewport {
+    flex: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, #192a3a 0%, #0b141a 100%);
+    padding: 20px;
+    position: relative;
+}
+
+/* 關鍵核心：Wrapper 容器，強制 1:1，卡死所有子元素定位基準 */
+.diagram-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#refractionCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* 理化構造標籤通用樣式 */
+.sci-label {
+    position: absolute;
+    background: rgba(11, 20, 26, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #fff;
+    pointer-events: none;
+    z-index: 10;
+    transition: opacity 0.3s, top 0.1s, left 0.1s;
+}
+
+/* 百分比座標絕對鎖定：無論全螢幕或縮小，永遠對齊幾何交線點 */
+.label-interface {
+    top: 46%;
+    right: 4%;
+    border-color: #00a8cc;
+    color: #00ffcc;
+}
+
+.label-normal {
+    top: 4%;
+    left: 52%;
+    border-color: var(--normal-color);
+}
+
+/* 動態調整位置的標籤 */
+.label-incident {
+    top: 20%;
+    left: 15%;
+    border-color: var(--laser-red);
+}
+
+.label-refracted {
+    bottom: 20%;
+    right: 15%;
+    border-color: var(--laser-red);
+}
+
+.angle-label {
+    background: rgba(0, 255, 204, 0.1);
+    border-color: var(--border-glow);
+    font-size: 11px;
+}
+
+.id-angle {
+    top: 38%;
+    left: 42%;
+}
+
+.r-angle {
+    bottom: 38%;
+    right: 42%;
+}
+
+/* 右側側邊欄 */
+.sidebar {
+    flex: 1.2;
+    background: #14202b;
+    border-left: 1px solid #243447;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+}
+
+.info-card {
+    background: rgba(30, 45, 59, 0.5);
+    border: 1px solid #243447;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.info-card h2 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot.yellow {
+    background: #ffcc00;
+    box-shadow: 0 0 8px #ffcc00;
+}
+
+.dot.green {
+    background: #00ffcc;
+    box-shadow: 0 0 8px #00ffcc;
+}
+
+.current-status {
+    font-size: 15px;
+    font-weight: bold;
+    color: #00ffcc;
+    margin-bottom: 8px;
+}
+
+blockquote {
+    font-size: 13px;
+    color: #cbd5e1;
+    border-left: 3px solid #00a8cc;
+    padding-left: 10px;
+    line-height: 1.6;
+}
+
+.info-card ul {
+    padding-left: 18px;
+    font-size: 13px;
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+.info-card li {
+    margin-bottom: 8px;
+}
+
+.dot.blue {
+    background: #00a8cc;
+    box-shadow: 0 0 8px #00a8cc;
+}
+
+.quiz-card {
+    border-color: rgba(0, 168, 204, 0.4);
+    background: rgba(11, 28, 41, 0.6);
+}
+
+.quiz-question {
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.opt-btn {
+    background: #1e2d3b;
+    border: 1px solid #38444d;
+    color: #cbd5e1;
+    padding: 10px 14px;
+    border-radius: 6px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+    line-height: 1.4;
+    /* 確保兩行文字之間有舒服的間距 */
+    word-break: break-all;
+    /* 確保超長英文字母也會安全換行 */
+}
+
+.opt-btn:hover {
+    background: #2c3e50;
+    border-color: #00ffcc;
+    color: #fff;
+}
+
+.quiz-feedback {
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.quiz-feedback.correct {
+    background: rgba(0, 255, 128, 0.15);
+    border: 1px solid #00ff80;
+    color: #00ff80;
+}
+
+.quiz-feedback.wrong {
+    background: rgba(255, 51, 51, 0.15);
+    border: 1px solid #ff3333;
+    color: #ff3333;
+}
+
+.hidden {
+    display: none !important;
+}

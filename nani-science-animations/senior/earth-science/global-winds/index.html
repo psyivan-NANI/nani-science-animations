@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中地科互動教室：全球三圈環流模型</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="control-panel">
+            <div class="panel-group">
+                <span class="app-title">🌍 全球大氣三圈環流動態模擬器</span>
+            </div>
+            <div class="panel-group toggle-group">
+                <button id="btn-single-cell" class="btn-toggle">單圈環流 (地球不自轉)</button>
+                <button id="btn-three-cell" class="btn-toggle active">三圈環流 (地球自轉)</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="canvas-viewport">
+                <div class="diagram-wrapper" id="winds-wrapper">
+
+                    <canvas id="windsCanvas"></canvas>
+
+                    <div class="sci-label pressure-lbl lbl-eq" style="top: 50%; left: 35%;">赤道低壓帶 (ITCZ)</div>
+                    <div class="sci-label pressure-lbl lbl-subhp-n" style="top: 33%; left: 37%;">副熱帶高壓帶</div>
+                    <div class="sci-label pressure-lbl lbl-sublp-n" style="top: 18%; left: 42%;">副極地低壓帶</div>
+                    <div class="sci-label pressure-lbl lbl-polarhp-n" style="top: 4%; left: 48%;">極地高壓帶</div>
+
+                    <div class="sci-label wind-lbl id-wind-trade" style="top: 42%; left: 16%;">東北信風帶</div>
+                    <div class="sci-label wind-lbl id-wind-westerly" style="top: 26%; left: 12%;">盛行西風帶</div>
+                    <div class="sci-label wind-lbl id-wind-polar" style="top: 10%; left: 18%;">極地東風帶</div>
+
+                    <div class="sci-label cell-lbl id-hadley" style="top: 41%; right: 5%;">哈德里環流</div>
+                    <div class="sci-label cell-lbl id-ferrel" style="top: 25%; right: 3%;">費雷爾環流</div>
+                    <div class="sci-label cell-lbl id-polar" style="top: 11%; right: 8%;">極地環流</div>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <section class="info-card">
+                    <h2><span class="dot yellow"></span> 行星風系觀測日誌</h2>
+                    <p class="current-status" id="model-title">當前狀態：三圈環流模式 (自轉)</p>
+                    <blockquote id="model-desc">
+                        受到地球自轉產生的<strong>科氏力</strong>影響，原本由赤道直通極地的單圈大氣對流被切分為三段，並在地表造成北半球風向右偏、南半球風向左偏的行星風系體系。
+                    </blockquote>
+                </section>
+
+                <section class="info-card">
+                    <h2><span class="dot green"></span> 高中地科黃金考點</h2>
+                    <ul>
+                        <li><strong>熱力高低壓：</strong>赤道因受熱多而空氣上升形成熱力低壓（ITCZ，多雨）；極地因寒冷沉降形成熱力高壓（乾燥）。</li>
+                        <li><strong>動力高低壓：</strong>副熱帶高壓帶（緯度30°）因高空堆積氣流下沉而乾燥少雨（全球大沙漠區）；副極地低壓帶（緯度60°）因冷暖氣團交會上升形成鋒面。</li>
+                        <li><strong>地表風帶偏轉：</strong>北半球受科氏力向右偏（信風由東北吹向西南）；南半球向左偏。</li>
+                    </ul>
+                </section>
+
+                <section class="info-card quiz-card">
+                    <h2><span class="dot blue"></span> 課堂課後隨堂檢測</h2>
+                    <div id="quiz-container">
+                        <div class="quiz-question" id="quiz-q">載入中...</div>
+                        <div class="quiz-options" id="quiz-opts">
+                        </div>
+                        <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+                        <button id="btn-next-quiz" class="btn hidden" style="margin-top:12px; width:100%;"
+                            onclick="nextQuestion()">下一題</button>
+                    </div>
+                </section>
+            </aside>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

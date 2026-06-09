@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>南一版互動自然教室：光的折射原理</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="control-panel">
+            <div class="panel-group">
+                <button id="btn-play-pause" class="btn active">暫停光束</button>
+                <div class="slider-container">
+                    <label for="slider-angle">調整入射角：<span id="angle-text">45°</span></label>
+                    <input type="range" id="slider-angle" min="0" max="80" value="45" step="1">
+                </div>
+            </div>
+            <div class="panel-group">
+                <button id="mode-air-water" class="btn-view active">空氣 → 水 (快到慢)</button>
+                <button id="mode-water-air" class="btn-view">水 → 空氣 (慢到快)</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="canvas-viewport">
+                <div class="diagram-wrapper" id="refraction-wrapper">
+
+                    <canvas id="refractionCanvas"></canvas>
+
+                    <div class="sci-label label-interface">介面 (空氣/水交界)</div>
+                    <div class="sci-label label-normal">法線 (Normal)</div>
+                    <div class="sci-label label-incident" id="lbl-incident">入射光線</div>
+                    <div class="sci-label label-refracted" id="lbl-refracted">折射光線</div>
+
+                    <div class="sci-label angle-label id-angle" id="lbl-i-angle">入射角 ∠i</div>
+                    <div class="sci-label angle-label r-angle" id="lbl-r-angle">折射角 ∠r</div>
+
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <section class="info-card">
+                    <h2><span class="dot yellow"></span> 現階段介面現象</h2>
+                    <p class="current-status" id="status-title">光從 空氣 進入 水 中</p>
+                    <blockquote id="status-desc">
+                        光速在空氣中較快，在水中較慢。當光由「快介質」進入「慢介質」時，光線會<strong>偏向法線</strong>，此時折射角將小於入射角（∠r < ∠i）。 </blockquote>
+                </section>
+
+                <section class="info-card">
+                    <h2><span class="dot green"></span> 觀念解析與考點</h2>
+                    <ul>
+                        <li><strong>不折射的特例：</strong>當入射角為 0°（光線垂直界面入射）時，光線方向不變，但傳播速度依然會改變。</li>
+                        <li><strong>速度決定偏向：</strong>光速越快的介質，其與法線產生的夾角就越大。記法：「快大、慢小」。</li>
+                    </ul>
+                </section>
+                <section class="info-card quiz-card">
+                    <h2><span class="dot blue"></span> 課堂課後隨堂檢測</h2>
+                    <div id="quiz-container">
+                        <div class="quiz-question" id="quiz-q">載入中...</div>
+                        <div class="quiz-options" id="quiz-opts">
+                        </div>
+                        <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+                        <button id="btn-next-quiz" class="btn hidden" style="margin-top:10px; width:100%;"
+                            onclick="nextQuestion()">下一題</button>
+                    </div>
+                </section>
+            </aside>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
